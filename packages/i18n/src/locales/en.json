@@ -107,12 +107,20 @@
     "ok": "OK"
   },
   "welcome": {
-    "tagline": "Your groups, chat and events. Nothing else.",
-    "point1": "Only real people: everyone signs in with Vipps.",
-    "point2": "No feed, no algorithm, no ads.",
-    "point3": "Calm notifications, only for what matters.",
-    "continueWithVipps": "Continue with Vipps",
+    "headline": "All your groups. One calm place.",
+    "benefitChat": "One chat per group, not ten threads",
+    "benefitEvents": "Events with RSVPs and reminders",
+    "benefitTrust": "Only real people, no ads",
+    "ring": {
+      "you": "You",
+      "class": "Class",
+      "family": "Family",
+      "friends": "Friends",
+      "team": "Team",
+      "neighbours": "Neighbours"
+    },
     "adultsOnly": "Hubbr is for adults (18+).",
+    "continueWithVipps": "Continue with Vipps",
     "vippsSoonTitle": "Coming soon",
     "vippsSoonBody": "Sign-in with Vipps isn't available yet."
   },

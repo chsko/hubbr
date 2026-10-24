@@ -65,7 +65,7 @@ Bottom tabs:
 
 ### 5.1 Sign up / sign in (Vipps)
 
-1. Landing screen shows the value proposition and one button: **"Fortsett med Vipps"** ("Continue with Vipps").
+1. Landing screen shows the value proposition and one button: **"Fortsett med Vipps"** ("Continue with Vipps"). The logo ring is drawn large with Klassen, Familien, Vennene, Laget and Nabolaget gathering around an amber "Deg", then the headline and three short benefits (HUB-48).
 2. The Vipps app (or web flow) asks for consent to share name, phone number, email and birth date.
 3. Server checks age ≥ 18 from `birthDate`. If under 18, a friendly rejection screen; nothing is stored.
 4. Profile prefilled from Vipps (name is locked to the Vipps name), plus an optional photo. Pick language (default: device language).
