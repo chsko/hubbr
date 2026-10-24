@@ -51,7 +51,7 @@ export function ImageViewer({ photos, onClose }: Props) {
             accessibilityRole="button"
             accessibilityLabel={t("common.close")}
             onPress={onClose}
-            className="m-3 h-11 w-11 items-center justify-center rounded-full bg-black/60"
+            className="m-3 h-11 w-11 items-center justify-center rounded-full bg-black/60 active:opacity-60"
           >
             <X color="#FFFFFF" size={24} />
           </Pressable>

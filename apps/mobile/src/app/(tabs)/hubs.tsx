@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { RingEmptyState } from "@/components/empty-state";
 import { HubIcon } from "@/components/hub-icon";
+import { PressScale } from "@/components/press-scale";
 import { UnreadBadge } from "@/components/unread-badge";
 import { Screen } from "@/components/screen";
 import { useScheme } from "@/lib/use-scheme";
@@ -24,14 +25,14 @@ export default function HubsScreen() {
       ) : hubs.length === 0 ? (
         <RingEmptyState title={t("hubs.emptyTitle")} body={t("hubs.emptyBody")}>
           <Link href="/hub/new" asChild>
-            <Pressable
+            <PressScale
               testID="create-hub"
               accessibilityRole="button"
               className="flex-row items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 active:opacity-80"
             >
               <Plus color={c.bg} size={20} strokeWidth={2.4} />
               <Text className="font-sans-bold text-[16px] text-bg">{t("hubs.create")}</Text>
-            </Pressable>
+            </PressScale>
           </Link>
           <Link href="/hub/join" asChild>
             <Pressable
@@ -48,7 +49,7 @@ export default function HubsScreen() {
       ) : (
         <>
           <Link href="/hub/new" asChild>
-            <Pressable
+            <PressScale
               testID="create-hub"
               accessibilityRole="button"
               className="flex-row items-center justify-center gap-2 rounded-xl bg-primarySoft px-4 py-3.5 active:opacity-80"
@@ -57,7 +58,7 @@ export default function HubsScreen() {
               <Text className="font-sans-bold text-[16px] text-primaryStrong">
                 {t("hubs.create")}
               </Text>
-            </Pressable>
+            </PressScale>
           </Link>
           <Link href="/hub/join" asChild>
             <Pressable

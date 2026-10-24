@@ -116,7 +116,7 @@ export function MonthCalendar({
                 accessibilityState={{ selected: isSelected, disabled }}
                 disabled={disabled}
                 onPress={() => onSelect(d)}
-                className="h-11 flex-1 items-center justify-center"
+                className="h-11 flex-1 items-center justify-center active:opacity-60"
               >
                 <View
                   className={`h-9 w-9 items-center justify-center rounded-full ${isSelected ? "bg-primary" : isToday ? "border border-primary" : ""}`}

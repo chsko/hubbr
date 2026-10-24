@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { Pressable, Text } from "react-native";
+import { Text } from "react-native";
+import { PressScale } from "@/components/press-scale";
 
 const VIPPS_ORANGE = "#FF5B24";
 
@@ -10,7 +11,7 @@ const VIPPS_ORANGE = "#FF5B24";
 export function VippsButton({ onPress, disabled }: { onPress: () => void; disabled?: boolean }) {
   const { t } = useTranslation();
   return (
-    <Pressable
+    <PressScale
       testID="continue-with-vipps"
       accessibilityRole="button"
       disabled={disabled}
@@ -21,6 +22,6 @@ export function VippsButton({ onPress, disabled }: { onPress: () => void; disabl
       <Text className="font-sans-bold text-[17px] text-white">
         {t("welcome.continueWithVipps")}
       </Text>
-    </Pressable>
+    </PressScale>
   );
 }

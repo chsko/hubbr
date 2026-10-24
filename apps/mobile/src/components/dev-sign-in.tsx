@@ -4,7 +4,8 @@ import { useQuery } from "convex/react";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { PressScale } from "@/components/press-scale";
 import { convexErrorCode } from "@/lib/errors";
 
 /**
@@ -37,7 +38,7 @@ export function DevSignIn() {
         {t("devSignIn.title")}
       </Text>
       {personas.map((p) => (
-        <Pressable
+        <PressScale
           key={p.id}
           testID={`dev-sign-in-${p.id}`}
           accessibilityRole="button"
@@ -48,7 +49,7 @@ export function DevSignIn() {
           <Text className="font-sans-semibold text-[15px] text-primaryStrong">
             {p.name} ({p.birthYear})
           </Text>
-        </Pressable>
+        </PressScale>
       ))}
     </View>
   );

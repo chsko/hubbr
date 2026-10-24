@@ -26,6 +26,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        // A quick cross-fade between tabs (HUB-49); fine with Reduce motion too.
+        animation: "fade",
         tabBarActiveTintColor: c.primary,
         tabBarInactiveTintColor: c.textMuted,
         // Room for Figtree descenders; keeps the home-indicator inset on iOS.

@@ -190,7 +190,7 @@ function Subscribe() {
           </Text>
         </Pressable>
         {token ? (
-          <Pressable accessibilityRole="button" onPress={more}>
+          <Pressable accessibilityRole="button" onPress={more} className="active:opacity-60">
             <Text className="font-sans-semibold text-[14px] text-primary">
               {t("calendar.manageLink")}
             </Text>

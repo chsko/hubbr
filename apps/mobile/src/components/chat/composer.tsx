@@ -64,7 +64,7 @@ export function Composer(props: Props) {
             accessibilityRole="button"
             accessibilityLabel={t("common.cancel")}
             onPress={props.onCancelContext}
-            className="h-9 w-9 items-center justify-center"
+            className="h-9 w-9 items-center justify-center active:opacity-60"
           >
             <X color={c.textMuted} size={18} />
           </Pressable>
@@ -79,7 +79,7 @@ export function Composer(props: Props) {
                 accessibilityRole="button"
                 accessibilityLabel={t("chat.removePhoto")}
                 onPress={() => props.onRemoveImage(uri)}
-                className="absolute -right-1.5 -top-1.5 h-6 w-6 items-center justify-center rounded-full bg-text"
+                className="absolute -right-1.5 -top-1.5 h-6 w-6 items-center justify-center rounded-full bg-text active:opacity-60"
               >
                 <X color={c.bg} size={14} strokeWidth={2.6} />
               </Pressable>

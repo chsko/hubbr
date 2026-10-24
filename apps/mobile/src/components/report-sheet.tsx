@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Alert, Pressable, Text, TextInput, View } from "react-native";
 import { BottomSheet } from "@/components/bottom-sheet";
+import { PressScale } from "@/components/press-scale";
 import { useScheme } from "@/lib/use-scheme";
 
 export type ReportTarget = {
@@ -98,7 +99,7 @@ function ReportForm({ target, onClose }: { target: ReportTarget; onClose: () => 
         multiline
         className="min-h-16 rounded-xl border border-border bg-bg px-3.5 py-3 font-sans text-[15px] text-text"
       />
-      <Pressable
+      <PressScale
         testID="report-send"
         accessibilityRole="button"
         disabled={reason === null || sending}
@@ -110,7 +111,7 @@ function ReportForm({ target, onClose }: { target: ReportTarget; onClose: () => 
         ) : (
           <Text className="font-sans-bold text-[16px] text-primaryStrong">{t("report.send")}</Text>
         )}
-      </Pressable>
+      </PressScale>
     </>
   );
 }

@@ -13,8 +13,6 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
   ScrollView,
   Switch,
@@ -24,6 +22,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KommuneSheet } from "@/components/kommune-sheet";
+import { PressScale } from "@/components/press-scale";
 import { StackHeader } from "@/components/stack-header";
 import { convexErrorCode } from "@/lib/errors";
 import { useLocale } from "@/lib/i18n";
@@ -208,280 +207,281 @@ export function EventForm({
 
   return (
     <SafeAreaView className="flex-1 bg-bg">
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        className="flex-1"
+      <StackHeader title={screenTitle} close />
+      <ScrollView
+        contentContainerClassName="gap-5 px-5 pb-10"
+        keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets
       >
-        <StackHeader title={screenTitle} />
-        <ScrollView
-          contentContainerClassName="gap-5 px-5 pb-10"
-          keyboardShouldPersistTaps="handled"
+        <Pressable
+          testID="event-cover"
+          accessibilityRole="button"
+          accessibilityLabel={cover ? t("events.changeCover") : t("events.addCover")}
+          onPress={() => void pickCover()}
+          className="overflow-hidden rounded-2xl border border-dashed border-border bg-surface active:opacity-80"
+          style={{ aspectRatio: 16 / 9 }}
         >
-          <Pressable
-            testID="event-cover"
-            accessibilityRole="button"
-            accessibilityLabel={cover ? t("events.changeCover") : t("events.addCover")}
-            onPress={() => void pickCover()}
-            className="overflow-hidden rounded-2xl border border-dashed border-border bg-surface active:opacity-80"
-            style={{ aspectRatio: 16 / 9 }}
-          >
-            {cover ? (
-              <Image
-                source={{ uri: cover.uri }}
-                style={{ width: "100%", height: "100%" }}
-                accessibilityIgnoresInvertColors
-              />
-            ) : (
-              <View className="flex-1 items-center justify-center">
-                <Text className="font-sans-semibold text-[15px] text-primary">
-                  {t("events.addCover")}
-                </Text>
-              </View>
-            )}
-          </Pressable>
           {cover ? (
-            <Pressable accessibilityRole="button" onPress={() => setCover(null)}>
-              <Text className="-mt-3 font-sans-semibold text-[14px] text-textMuted">
-                {t("events.removeCover")}
-              </Text>
-            </Pressable>
-          ) : null}
-
-          <Field label={t("events.titleLabel")}>
-            <TextInput
-              testID="event-title"
-              value={title}
-              onChangeText={setTitle}
-              placeholder={t("events.titlePlaceholder")}
-              placeholderTextColor={c.textMuted}
-              maxLength={MAX_TITLE_LENGTH}
-              autoFocus={initial === null}
-              className={`${input} font-sans-semibold text-[17px]`}
+            <Image
+              source={{ uri: cover.uri }}
+              style={{ width: "100%", height: "100%" }}
+              accessibilityIgnoresInvertColors
             />
-          </Field>
-
-          <Field label={t("events.date")}>
-            <Pressable
-              testID="event-date"
-              accessibilityRole="button"
-              onPress={() => setPicking("date")}
-              className={input}
-            >
-              <Text className={`font-sans text-[16px] ${day ? "text-text" : "text-textMuted"}`}>
-                {day
-                  ? formatCompactDateWithWeekday(at(day, { hour: 12, minute: 0 }), locale)
-                  : t("events.pickDate")}
+          ) : (
+            <View className="flex-1 items-center justify-center">
+              <Text className="font-sans-semibold text-[15px] text-primary">
+                {t("events.addCover")}
               </Text>
-            </Pressable>
-          </Field>
+            </View>
+          )}
+        </Pressable>
+        {cover ? (
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => setCover(null)}
+            className="active:opacity-60"
+          >
+            <Text className="-mt-3 font-sans-semibold text-[14px] text-textMuted">
+              {t("events.removeCover")}
+            </Text>
+          </Pressable>
+        ) : null}
 
-          <View className="flex-row gap-3">
-            <View className="flex-1">
-              <Field label={t("events.start")} error={problems.start ? t("events.badTime") : null}>
-                <TextInput
-                  testID="event-start"
-                  value={start}
-                  onChangeText={setStart}
-                  onBlur={() => startTime && setStart(timeText(startTime))}
-                  placeholder="18:00"
-                  placeholderTextColor={c.textMuted}
-                  keyboardType="numbers-and-punctuation"
-                  maxLength={5}
-                  className={input}
-                />
-              </Field>
-            </View>
-            <View className="flex-1">
-              <Field label={t("events.end")} error={problems.end ? t("events.badTime") : null}>
-                <TextInput
-                  testID="event-end"
-                  value={end}
-                  onChangeText={setEnd}
-                  onBlur={() => endTime && setEnd(timeText(endTime))}
-                  placeholder={t("events.optional")}
-                  placeholderTextColor={c.textMuted}
-                  keyboardType="numbers-and-punctuation"
-                  maxLength={5}
-                  className={input}
-                />
-              </Field>
-            </View>
+        <Field label={t("events.titleLabel")}>
+          <TextInput
+            testID="event-title"
+            value={title}
+            onChangeText={setTitle}
+            placeholder={t("events.titlePlaceholder")}
+            placeholderTextColor={c.textMuted}
+            maxLength={MAX_TITLE_LENGTH}
+            autoFocus={initial === null}
+            className={`${input} font-sans-semibold text-[17px]`}
+          />
+        </Field>
+
+        <Field label={t("events.date")}>
+          <Pressable
+            testID="event-date"
+            accessibilityRole="button"
+            onPress={() => setPicking("date")}
+            className={input}
+          >
+            <Text className={`font-sans text-[16px] ${day ? "text-text" : "text-textMuted"}`}>
+              {day
+                ? formatCompactDateWithWeekday(at(day, { hour: 12, minute: 0 }), locale)
+                : t("events.pickDate")}
+            </Text>
+          </Pressable>
+        </Field>
+
+        <View className="flex-row gap-3">
+          <View className="flex-1">
+            <Field label={t("events.start")} error={problems.start ? t("events.badTime") : null}>
+              <TextInput
+                testID="event-start"
+                value={start}
+                onChangeText={setStart}
+                onBlur={() => startTime && setStart(timeText(startTime))}
+                placeholder="18:00"
+                placeholderTextColor={c.textMuted}
+                keyboardType="numbers-and-punctuation"
+                maxLength={5}
+                className={input}
+              />
+            </Field>
           </View>
+          <View className="flex-1">
+            <Field label={t("events.end")} error={problems.end ? t("events.badTime") : null}>
+              <TextInput
+                testID="event-end"
+                value={end}
+                onChangeText={setEnd}
+                onBlur={() => endTime && setEnd(timeText(endTime))}
+                placeholder={t("events.optional")}
+                placeholderTextColor={c.textMuted}
+                keyboardType="numbers-and-punctuation"
+                maxLength={5}
+                className={input}
+              />
+            </Field>
+          </View>
+        </View>
 
-          <Field label={t("events.place")}>
-            <PlaceField
-              text={place}
-              picked={pickedPlace}
-              onChange={(text, picked) => {
-                setPlace(text);
-                setPickedPlace(picked);
-              }}
-              inputClassName={input}
-            />
+        <Field label={t("events.place")}>
+          <PlaceField
+            text={place}
+            picked={pickedPlace}
+            onChange={(text, picked) => {
+              setPlace(text);
+              setPickedPlace(picked);
+            }}
+            inputClassName={input}
+          />
+        </Field>
+
+        {fixedVisibility === undefined ? (
+          <Field label={t("events.visibility")}>
+            <View accessibilityRole="radiogroup" className="flex-row gap-2">
+              {(["hub", "public"] as const).map((v) => (
+                <PressScale
+                  key={v}
+                  wrapperStyle={{ flex: 1 }}
+                  testID={`visibility-${v}`}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: visibility === v }}
+                  onPress={() => setVisibility(v)}
+                  className={`flex-1 items-center rounded-full py-3 ${visibility === v ? "bg-primary" : "border border-border bg-surface"} active:opacity-70`}
+                >
+                  <Text
+                    className={`font-sans-bold text-[15px] ${visibility === v ? "text-bg" : "text-text"}`}
+                  >
+                    {v === "hub" ? t("events.visibilityHub") : t("events.visibilityPublic")}
+                  </Text>
+                </PressScale>
+              ))}
+            </View>
+            <Text className="font-sans text-[13px] leading-5 text-textMuted">
+              {isPublic ? t("events.publicBody") : t("events.hubBody")}
+            </Text>
           </Field>
+        ) : null}
 
-          {fixedVisibility === undefined ? (
-            <Field label={t("events.visibility")}>
-              <View accessibilityRole="radiogroup" className="flex-row gap-2">
-                {(["hub", "public"] as const).map((v) => (
+        {isPublic ? (
+          <>
+            <Field label={t("events.category")}>
+              <View accessibilityRole="radiogroup" className="flex-row flex-wrap gap-2">
+                {categories.map((k) => (
                   <Pressable
-                    key={v}
-                    testID={`visibility-${v}`}
+                    key={k}
+                    testID={`category-${k}`}
                     accessibilityRole="radio"
-                    accessibilityState={{ checked: visibility === v }}
-                    onPress={() => setVisibility(v)}
-                    className={`flex-1 items-center rounded-full py-3 ${visibility === v ? "bg-primary" : "border border-border bg-surface"} active:opacity-70`}
+                    accessibilityState={{ checked: category === k }}
+                    onPress={() => setCategory(k)}
+                    className={`rounded-full px-3.5 py-2 ${category === k ? "bg-primary" : "border border-border bg-surface"} active:opacity-70`}
                   >
                     <Text
-                      className={`font-sans-bold text-[15px] ${visibility === v ? "text-bg" : "text-text"}`}
+                      className={`font-sans-semibold text-[14px] ${category === k ? "text-bg" : "text-text"}`}
                     >
-                      {v === "hub" ? t("events.visibilityHub") : t("events.visibilityPublic")}
+                      {t(`events.categories.${k}`)}
                     </Text>
                   </Pressable>
                 ))}
               </View>
-              <Text className="font-sans text-[13px] leading-5 text-textMuted">
-                {isPublic ? t("events.publicBody") : t("events.hubBody")}
-              </Text>
             </Field>
-          ) : null}
-
-          {isPublic ? (
-            <>
-              <Field label={t("events.category")}>
-                <View accessibilityRole="radiogroup" className="flex-row flex-wrap gap-2">
-                  {categories.map((k) => (
-                    <Pressable
-                      key={k}
-                      testID={`category-${k}`}
-                      accessibilityRole="radio"
-                      accessibilityState={{ checked: category === k }}
-                      onPress={() => setCategory(k)}
-                      className={`rounded-full px-3.5 py-2 ${category === k ? "bg-primary" : "border border-border bg-surface"} active:opacity-70`}
-                    >
-                      <Text
-                        className={`font-sans-semibold text-[14px] ${category === k ? "text-bg" : "text-text"}`}
-                      >
-                        {t(`events.categories.${k}`)}
-                      </Text>
-                    </Pressable>
-                  ))}
-                </View>
-              </Field>
-              <Field label={t("events.kommune")}>
-                {placeKommune !== null ? (
-                  <Text className="font-sans text-[16px] text-text">
-                    {kommuneName(placeKommune) ?? placeKommune}
-                  </Text>
-                ) : (
-                  <Pressable
-                    testID="event-kommune"
-                    accessibilityRole="button"
-                    onPress={() => setPickingKommune(true)}
-                    className={input}
-                  >
-                    <Text
-                      className={`font-sans text-[16px] ${kommuneNr ? "text-text" : "text-textMuted"}`}
-                    >
-                      {kommuneName(kommuneNr) ?? t("events.pickKommune")}
-                    </Text>
-                  </Pressable>
-                )}
-              </Field>
-            </>
-          ) : null}
-
-          <Field label={t("events.description")}>
-            <TextInput
-              testID="event-description"
-              value={description}
-              onChangeText={setDescription}
-              placeholder={t("events.descriptionPlaceholder")}
-              placeholderTextColor={c.textMuted}
-              maxLength={MAX_DESCRIPTION_LENGTH}
-              multiline
-              textAlignVertical="top"
-              className={`${input} min-h-28`}
-            />
-          </Field>
-
-          <Text className="font-sans-semibold text-xs uppercase tracking-widest text-textMuted">
-            {t("events.rsvpSettings")}
-          </Text>
-          <View className="flex-row gap-3">
-            <View className="flex-1">
-              <Field
-                label={t("events.deadline")}
-                error={problems.deadline ? t("events.deadlineAfterStart") : null}
-              >
+            <Field label={t("events.kommune")}>
+              {placeKommune !== null ? (
+                <Text className="font-sans text-[16px] text-text">
+                  {kommuneName(placeKommune) ?? placeKommune}
+                </Text>
+              ) : (
                 <Pressable
-                  testID="event-deadline"
+                  testID="event-kommune"
                   accessibilityRole="button"
-                  onPress={() => setPicking("deadline")}
+                  onPress={() => setPickingKommune(true)}
                   className={input}
                 >
                   <Text
-                    numberOfLines={1}
-                    className={`font-sans text-[16px] ${deadline ? "text-text" : "text-textMuted"}`}
+                    className={`font-sans text-[16px] ${kommuneNr ? "text-text" : "text-textMuted"}`}
                   >
-                    {deadline
-                      ? formatCompactDate(at(deadline, { hour: 12, minute: 0 }), locale)
-                      : t("events.optional")}
+                    {kommuneName(kommuneNr) ?? t("events.pickKommune")}
                   </Text>
                 </Pressable>
-              </Field>
-            </View>
-            <View className="flex-1">
-              <Field
-                label={t("events.capacity")}
-                error={problems.capacity ? t("events.badCapacity") : null}
+              )}
+            </Field>
+          </>
+        ) : null}
+
+        <Field label={t("events.description")}>
+          <TextInput
+            testID="event-description"
+            value={description}
+            onChangeText={setDescription}
+            placeholder={t("events.descriptionPlaceholder")}
+            placeholderTextColor={c.textMuted}
+            maxLength={MAX_DESCRIPTION_LENGTH}
+            multiline
+            textAlignVertical="top"
+            className={`${input} min-h-28`}
+          />
+        </Field>
+
+        <Text className="font-sans-semibold text-xs uppercase tracking-widest text-textMuted">
+          {t("events.rsvpSettings")}
+        </Text>
+        <View className="flex-row gap-3">
+          <View className="flex-1">
+            <Field
+              label={t("events.deadline")}
+              error={problems.deadline ? t("events.deadlineAfterStart") : null}
+            >
+              <Pressable
+                testID="event-deadline"
+                accessibilityRole="button"
+                onPress={() => setPicking("deadline")}
+                className={input}
               >
-                <TextInput
-                  testID="event-capacity"
-                  value={capacity}
-                  onChangeText={setCapacity}
-                  placeholder={t("events.optional")}
-                  placeholderTextColor={c.textMuted}
-                  keyboardType="number-pad"
-                  maxLength={4}
-                  className={input}
-                />
-              </Field>
-            </View>
+                <Text
+                  numberOfLines={1}
+                  className={`font-sans text-[16px] ${deadline ? "text-text" : "text-textMuted"}`}
+                >
+                  {deadline
+                    ? formatCompactDate(at(deadline, { hour: 12, minute: 0 }), locale)
+                    : t("events.optional")}
+                </Text>
+              </Pressable>
+            </Field>
           </View>
-
-          <View className="flex-row items-center gap-3">
-            <View className="flex-1 gap-0.5">
-              <Text className="font-sans-semibold text-[15px] text-text">
-                {t("events.reminders")}
-              </Text>
-              <Text className="font-sans text-[13px] leading-5 text-textMuted">
-                {t("events.remindersBody")}
-              </Text>
-            </View>
-            <Switch
-              testID="event-reminders"
-              accessibilityLabel={t("events.reminders")}
-              value={reminders}
-              onValueChange={setReminders}
-            />
+          <View className="flex-1">
+            <Field
+              label={t("events.capacity")}
+              error={problems.capacity ? t("events.badCapacity") : null}
+            >
+              <TextInput
+                testID="event-capacity"
+                value={capacity}
+                onChangeText={setCapacity}
+                placeholder={t("events.optional")}
+                placeholderTextColor={c.textMuted}
+                keyboardType="number-pad"
+                maxLength={4}
+                className={input}
+              />
+            </Field>
           </View>
+        </View>
 
-          <Pressable
-            testID="event-submit"
-            accessibilityRole="button"
-            disabled={!valid || saving}
-            onPress={() => void submit()}
-            className="items-center rounded-xl bg-primarySoft px-4 py-4 active:opacity-80 disabled:opacity-50"
-          >
-            {saving ? (
-              <ActivityIndicator />
-            ) : (
-              <Text className="font-sans-bold text-[17px] text-primaryStrong">{submitLabel}</Text>
-            )}
-          </Pressable>
-        </ScrollView>
-      </KeyboardAvoidingView>
+        <View className="flex-row items-center gap-3">
+          <View className="flex-1 gap-0.5">
+            <Text className="font-sans-semibold text-[15px] text-text">
+              {t("events.reminders")}
+            </Text>
+            <Text className="font-sans text-[13px] leading-5 text-textMuted">
+              {t("events.remindersBody")}
+            </Text>
+          </View>
+          <Switch
+            testID="event-reminders"
+            accessibilityLabel={t("events.reminders")}
+            value={reminders}
+            onValueChange={setReminders}
+          />
+        </View>
+
+        <PressScale
+          testID="event-submit"
+          accessibilityRole="button"
+          disabled={!valid || saving}
+          onPress={() => void submit()}
+          className="items-center rounded-xl bg-primarySoft px-4 py-4 active:opacity-80 disabled:opacity-50"
+        >
+          {saving ? (
+            <ActivityIndicator />
+          ) : (
+            <Text className="font-sans-bold text-[17px] text-primaryStrong">{submitLabel}</Text>
+          )}
+        </PressScale>
+      </ScrollView>
 
       <KommuneSheet
         visible={pickingKommune}
@@ -565,6 +565,7 @@ function DayPicker({
               onClear();
               onClose();
             }}
+            className="active:opacity-60"
           >
             <Text className="font-sans-semibold text-[15px] text-primary">{t("events.clear")}</Text>
           </Pressable>

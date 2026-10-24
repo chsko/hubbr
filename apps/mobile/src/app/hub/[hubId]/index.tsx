@@ -20,6 +20,7 @@ import { HubEvents } from "@/components/events/hub-events";
 import { HubIcon } from "@/components/hub-icon";
 import { NotAMember } from "@/components/not-a-member";
 import { NotifyLevelButton } from "@/components/notify-level";
+import { PressScale } from "@/components/press-scale";
 import { type ReportTarget, ReportSheet, useConfirmBlock } from "@/components/report-sheet";
 import { StackHeader } from "@/components/stack-header";
 
@@ -259,14 +260,14 @@ function Members({ hubId, myRole }: { hubId: Id<"hubs">; myRole: Role }) {
           {t("members.ownerCantLeave")}
         </Text>
       ) : (
-        <Pressable
+        <PressScale
           testID="leave-hub"
           accessibilityRole="button"
           onPress={confirmLeave}
           className="items-center rounded-2xl border border-border bg-surface px-4 py-3 active:opacity-60"
         >
           <Text className="font-sans-semibold text-[15px] text-danger">{t("members.leave")}</Text>
-        </Pressable>
+        </PressScale>
       )}
       <Pressable
         testID="report-hub"
@@ -369,7 +370,7 @@ function HubChat({
                   {t("hub.aloneBody")}
                 </Text>
               </View>
-              <Pressable
+              <PressScale
                 testID="invite-alone"
                 accessibilityRole="button"
                 onPress={() => router.push({ pathname: "/hub/[hubId]/invite", params: { hubId } })}
@@ -378,7 +379,7 @@ function HubChat({
                 <Text className="font-sans-bold text-[15px] text-primaryStrong">
                   {t("hub.aloneInvite")}
                 </Text>
-              </Pressable>
+              </PressScale>
             </View>
           ) : null}
         </View>

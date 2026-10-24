@@ -3,9 +3,10 @@ import { useConvexAuth, useMutation, useQuery } from "convex/react";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HubIcon } from "@/components/hub-icon";
+import { PressScale } from "@/components/press-scale";
 import { StackHeader } from "@/components/stack-header";
 import { savePendingInvite } from "@/lib/invite-link";
 
@@ -145,7 +146,7 @@ function PrimaryButton(props: {
   testID?: string;
 }) {
   return (
-    <Pressable
+    <PressScale
       testID={props.testID}
       accessibilityRole="button"
       disabled={props.busy}
@@ -157,6 +158,6 @@ function PrimaryButton(props: {
       ) : (
         <Text className="font-sans-bold text-[17px] text-primaryStrong">{props.label}</Text>
       )}
-    </Pressable>
+    </PressScale>
   );
 }

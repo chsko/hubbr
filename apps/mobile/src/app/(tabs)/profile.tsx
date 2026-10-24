@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { Avatar } from "@/components/avatar";
 import { LanguagePicker } from "@/components/language-picker";
+import { PressScale } from "@/components/press-scale";
 import { Screen } from "@/components/screen";
 import { VerifiedBadge } from "@/components/verified-badge";
 import { useProfilePhoto } from "@/lib/profile-photo";
@@ -61,14 +62,22 @@ export default function ProfileScreen() {
                 {photo.busy ? (
                   <ActivityIndicator />
                 ) : (
-                  <Pressable accessibilityRole="button" onPress={() => void pickPhoto()}>
+                  <Pressable
+                    accessibilityRole="button"
+                    onPress={() => void pickPhoto()}
+                    className="active:opacity-60"
+                  >
                     <Text className="font-sans-semibold text-[14px] text-primary">
                       {me.photoUrl ? t("profile.changePhoto") : t("profile.addPhoto")}
                     </Text>
                   </Pressable>
                 )}
                 {me.photoUrl && !photo.busy ? (
-                  <Pressable accessibilityRole="button" onPress={() => void photo.remove()}>
+                  <Pressable
+                    accessibilityRole="button"
+                    onPress={() => void photo.remove()}
+                    className="active:opacity-60"
+                  >
                     <Text className="font-sans-semibold text-[14px] text-textMuted">
                       {t("profile.removePhoto")}
                     </Text>
@@ -110,14 +119,14 @@ export default function ProfileScreen() {
         </View>
       </View>
 
-      <Pressable
+      <PressScale
         testID="sign-out"
         accessibilityRole="button"
         onPress={() => void forgetDevice().then(() => signOut())}
         className="items-center rounded-2xl border border-border bg-surface px-4 py-3 active:opacity-60"
       >
         <Text className="font-sans-semibold text-[15px] text-danger">{t("profile.signOut")}</Text>
-      </Pressable>
+      </PressScale>
 
       <DeleteAccount onDeleted={() => void signOut()} />
     </Screen>

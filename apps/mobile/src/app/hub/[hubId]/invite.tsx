@@ -20,6 +20,7 @@ import {
 import QRCode from "react-native-qrcode-svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NotAMember } from "@/components/not-a-member";
+import { PressScale } from "@/components/press-scale";
 import { StackHeader } from "@/components/stack-header";
 import { formatCode, inviteUrl } from "@/lib/invite-link";
 import { formatDate } from "@hubbr/i18n";
@@ -195,13 +196,13 @@ export default function InviteScreen() {
 
 function ActionButton(props: { label: string; onPress: () => void; testID?: string }) {
   return (
-    <Pressable
+    <PressScale
       testID={props.testID}
       accessibilityRole="button"
       onPress={props.onPress}
       className="items-center rounded-xl bg-primarySoft px-4 py-3.5 active:opacity-80"
     >
       <Text className="font-sans-bold text-[16px] text-primaryStrong">{props.label}</Text>
-    </Pressable>
+    </PressScale>
   );
 }

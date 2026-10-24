@@ -9,6 +9,7 @@ import { RingEmptyState } from "@/components/empty-state";
 import { HubIcon } from "@/components/hub-icon";
 import { EventRow, NextEventHero } from "@/components/events/event-ui";
 import { Wordmark } from "@/components/logo";
+import { PressScale } from "@/components/press-scale";
 import { Screen } from "@/components/screen";
 import { UnreadBadge } from "@/components/unread-badge";
 
@@ -56,13 +57,13 @@ export default function HomeScreen() {
       <Screen title={title} header={header}>
         <RingEmptyState title={t("home.emptyTitle")} body={t("home.emptyBody")}>
           <Link href="/hub/new" asChild>
-            <Pressable
+            <PressScale
               testID="home-create-hub"
               accessibilityRole="button"
               className="items-center rounded-xl bg-primary px-4 py-3.5 active:opacity-80"
             >
               <Text className="font-sans-bold text-[16px] text-bg">{t("hubs.create")}</Text>
-            </Pressable>
+            </PressScale>
           </Link>
           <Link href="/hub/join" asChild>
             <Pressable accessibilityRole="button" className="items-center py-3 active:opacity-70">

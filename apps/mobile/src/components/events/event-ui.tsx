@@ -5,6 +5,7 @@ import { CalendarDays } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { LogoMark } from "@/components/logo";
+import { PressScale } from "@/components/press-scale";
 import { useLocale } from "@/lib/i18n";
 import { useScheme } from "@/lib/use-scheme";
 
@@ -119,7 +120,7 @@ export function EventChatCard({
   const locale = useLocale();
   const c = colors[useScheme()];
   return (
-    <Pressable
+    <PressScale
       testID={`event-card-${event._id}`}
       accessibilityRole="button"
       onPress={() => router.push({ pathname: "/event/[eventId]", params: { eventId: event._id } })}
@@ -145,7 +146,7 @@ export function EventChatCard({
         </View>
       </View>
       <Text className="font-sans-semibold text-[14px] text-primary">{t("events.answer")}</Text>
-    </Pressable>
+    </PressScale>
   );
 }
 
@@ -168,7 +169,7 @@ export function NextEventHero({ event }: { event: HeroEvent }) {
   const locale = useLocale();
   const day = relativeDay(event.startsAt);
   return (
-    <Pressable
+    <PressScale
       testID={`next-event-${event._id}`}
       accessibilityRole="button"
       onPress={() => router.push({ pathname: "/event/[eventId]", params: { eventId: event._id } })}
@@ -218,6 +219,6 @@ export function NextEventHero({ event }: { event: HeroEvent }) {
           </View>
         ) : null}
       </View>
-    </Pressable>
+    </PressScale>
   );
 }

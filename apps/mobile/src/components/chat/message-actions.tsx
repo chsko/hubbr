@@ -54,7 +54,7 @@ export function MessageActions({
               accessibilityLabel={emoji}
               accessibilityState={{ selected: mine }}
               onPress={() => run(() => onReact(emoji))}
-              className={`h-11 w-11 items-center justify-center rounded-full ${mine ? "bg-primarySoft" : ""}`}
+              className={`h-11 w-11 items-center justify-center rounded-full active:opacity-60 ${mine ? "bg-primarySoft" : ""}`}
             >
               <Text className="text-[24px]">{emoji}</Text>
             </Pressable>

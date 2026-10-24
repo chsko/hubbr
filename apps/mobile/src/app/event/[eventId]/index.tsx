@@ -32,11 +32,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "@/components/avatar";
 import { formatWhen, type Rsvp } from "@/components/events/event-ui";
 import { NotAMember } from "@/components/not-a-member";
+import { PressScale } from "@/components/press-scale";
 import { ReportSheet } from "@/components/report-sheet";
 import { StackHeader } from "@/components/stack-header";
 import { UnreadBadge } from "@/components/unread-badge";
 import { useAddToCalendar } from "@/lib/calendar-feed";
 import { convexErrorCode } from "@/lib/errors";
+import { tapHaptic } from "@/lib/haptics";
 import { useLocale } from "@/lib/i18n";
 import { useScheme } from "@/lib/use-scheme";
 
@@ -197,7 +199,7 @@ export default function EventScreen() {
         ) : null}
 
         {event.conversationId ? (
-          <Pressable
+          <PressScale
             testID="event-chat"
             accessibilityRole="button"
             onPress={() => router.push({ pathname: "/event/[eventId]/chat", params: { eventId } })}
@@ -208,7 +210,7 @@ export default function EventScreen() {
               {t("events.chat")}
             </Text>
             <UnreadBadge count={event.chatUnread} />
-          </Pressable>
+          </PressScale>
         ) : null}
 
         {event.conversationId === null && !event.cancelled && !event.past ? (
@@ -218,7 +220,7 @@ export default function EventScreen() {
         ) : null}
 
         {!event.cancelled && !event.past ? (
-          <Pressable
+          <PressScale
             testID="add-to-calendar"
             accessibilityRole="button"
             onPress={() =>
@@ -230,7 +232,7 @@ export default function EventScreen() {
             <Text className="flex-1 font-sans-semibold text-[16px] text-text">
               {t("events.addToCalendar")}
             </Text>
-          </Pressable>
+          </PressScale>
         ) : null}
 
         <Attendees eventId={eventId} />
@@ -296,13 +298,17 @@ function RsvpPanel({ event }: { event: EventView }) {
             const selected = status === o;
             const disabled = o === "yes" && event.full && status !== "yes";
             return (
-              <Pressable
+              <PressScale
                 key={o}
+                wrapperStyle={{ flex: 1 }}
                 testID={`rsvp-${o}`}
                 accessibilityRole="radio"
                 accessibilityState={{ checked: selected, disabled }}
                 disabled={disabled}
-                onPress={() => void answer(o)}
+                onPress={() => {
+                  if (!selected) tapHaptic();
+                  void answer(o);
+                }}
                 className={`flex-1 items-center rounded-full py-3 ${selected ? "bg-primary" : "border border-border bg-bg"} ${disabled ? "opacity-40" : "active:opacity-70"}`}
               >
                 <Text
@@ -310,7 +316,7 @@ function RsvpPanel({ event }: { event: EventView }) {
                 >
                   {t(`events.rsvp.${o}`)}
                 </Text>
-              </Pressable>
+              </PressScale>
             );
           })}
         </View>
@@ -338,7 +344,7 @@ function RsvpPanel({ event }: { event: EventView }) {
               accessibilityLabel={t("events.fewerGuests")}
               disabled={guests === 0}
               onPress={() => void answer("yes", { guests: guests - 1 })}
-              className="h-11 w-11 items-center justify-center rounded-full border border-border disabled:opacity-40"
+              className="h-11 w-11 items-center justify-center rounded-full border border-border active:opacity-60 disabled:opacity-40"
             >
               <Minus color={c.text} size={18} />
             </Pressable>
@@ -348,7 +354,7 @@ function RsvpPanel({ event }: { event: EventView }) {
               accessibilityLabel={t("events.moreGuests")}
               disabled={guests >= MAX_GUESTS}
               onPress={() => void answer("yes", { guests: guests + 1 })}
-              className="h-11 w-11 items-center justify-center rounded-full border border-border disabled:opacity-40"
+              className="h-11 w-11 items-center justify-center rounded-full border border-border active:opacity-60 disabled:opacity-40"
             >
               <Plus color={c.text} size={18} />
             </Pressable>

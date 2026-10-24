@@ -2,11 +2,20 @@ import { api } from "@hubbr/backend/api";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
 import { router, Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Platform, View } from "react-native";
 import { useLocale } from "@/lib/i18n";
 import { takeFirstStop } from "@/lib/first-stop";
 import { takePendingInvite } from "@/lib/invite-link";
 import { usePush } from "@/lib/push";
+
+/**
+ * Screens that create something open as a sheet: a card you can swipe down
+ * on iOS, sliding up from the bottom on Android (HUB-49).
+ */
+const sheet = {
+  presentation: "modal",
+  animation: Platform.OS === "android" ? "slide_from_bottom" : "default",
+} as const;
 
 /**
  * The app's screens, gated on the account (HUB-12): signed out → welcome,
@@ -38,13 +47,13 @@ export function AppStack() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={signedIn && onboarded}>
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="hub/new" />
-          <Stack.Screen name="hub/join" />
+          <Stack.Screen name="hub/new" options={sheet} />
+          <Stack.Screen name="hub/join" options={sheet} />
           <Stack.Screen name="hub/[hubId]/index" />
           <Stack.Screen name="hub/[hubId]/invite" />
-          <Stack.Screen name="event/new" />
+          <Stack.Screen name="event/new" options={sheet} />
           <Stack.Screen name="event/[eventId]/index" />
-          <Stack.Screen name="event/[eventId]/edit" />
+          <Stack.Screen name="event/[eventId]/edit" options={sheet} />
           <Stack.Screen name="event/[eventId]/chat" />
         </Stack.Protected>
         <Stack.Protected guard={signedIn && !onboarded}>

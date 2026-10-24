@@ -11,6 +11,7 @@ import { RingEmptyState } from "@/components/empty-state";
 import { type Category, categories } from "@/components/events/categories";
 import { EventRow } from "@/components/events/event-ui";
 import { KommuneSheet } from "@/components/kommune-sheet";
+import { PressScale } from "@/components/press-scale";
 import { Screen } from "@/components/screen";
 import { useScheme } from "@/lib/use-scheme";
 
@@ -111,14 +112,14 @@ export default function DiscoverScreen() {
           <ChevronDown color={c.textMuted} size={18} />
         </Pressable>
         <Link href="/event/new" asChild>
-          <Pressable
+          <PressScale
             testID="discover-new"
             accessibilityRole="button"
             accessibilityLabel={t("discover.create")}
             className="h-12 w-12 items-center justify-center rounded-xl bg-primarySoft active:opacity-80"
           >
             <Plus color={c.primaryStrong} size={22} strokeWidth={2.4} />
-          </Pressable>
+          </PressScale>
         </Link>
       </View>
 
@@ -179,14 +180,14 @@ export default function DiscoverScreen() {
       ) : events.length === 0 ? (
         <RingEmptyState title={t("discover.empty")} body={t("discover.emptyBody")}>
           <Link href="/event/new" asChild>
-            <Pressable
+            <PressScale
               testID="discover-create"
               accessibilityRole="button"
               className="flex-row items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3.5 active:opacity-80"
             >
               <Plus color={c.bg} size={20} strokeWidth={2.4} />
               <Text className="font-sans-bold text-[16px] text-bg">{t("discover.create")}</Text>
-            </Pressable>
+            </PressScale>
           </Link>
         </RingEmptyState>
       ) : (

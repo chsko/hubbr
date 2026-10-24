@@ -2,8 +2,9 @@ import { colors } from "@hubbr/shared";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, Text, TextInput } from "react-native";
+import { ScrollView, Text, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { PressScale } from "@/components/press-scale";
 import { StackHeader } from "@/components/stack-header";
 import { parseInviteInput } from "@/lib/invite-link";
 import { useScheme } from "@/lib/use-scheme";
@@ -17,7 +18,7 @@ export default function JoinWithCode() {
 
   return (
     <SafeAreaView className="flex-1 bg-bg">
-      <StackHeader />
+      <StackHeader close />
       <ScrollView contentContainerClassName="gap-4 px-5 pb-10" keyboardShouldPersistTaps="handled">
         <Text accessibilityRole="header" className="font-sans-extrabold text-[28px] text-text">
           {t("join.withCodeTitle")}
@@ -37,7 +38,7 @@ export default function JoinWithCode() {
           accessibilityLabel={t("join.codeLabel")}
           className="rounded-xl border border-border bg-surface px-4 py-3.5 font-sans-semibold text-[17px] text-text"
         />
-        <Pressable
+        <PressScale
           testID="invite-code-continue"
           accessibilityRole="button"
           disabled={code === null}
@@ -47,7 +48,7 @@ export default function JoinWithCode() {
           <Text className="font-sans-bold text-[17px] text-primaryStrong">
             {t("join.continue")}
           </Text>
-        </Pressable>
+        </PressScale>
       </ScrollView>
     </SafeAreaView>
   );

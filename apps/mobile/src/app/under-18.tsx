@@ -1,7 +1,8 @@
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { PressScale } from "@/components/press-scale";
 
 /**
  * Shown when Vipps says the user is under 18 (HUB-11). The server rejected
@@ -22,14 +23,14 @@ export default function UnderEighteen() {
         <Text className="text-center font-sans text-[16px] leading-6 text-textMuted">
           {t("under18.body")}
         </Text>
-        <Pressable
+        <PressScale
           testID="under-18-ok"
           accessibilityRole="button"
           onPress={() => (router.canGoBack() ? router.back() : router.replace("/"))}
           className="mt-4 items-center rounded-xl bg-primarySoft px-4 py-3 active:opacity-80"
         >
           <Text className="font-sans-bold text-[16px] text-primaryStrong">{t("under18.ok")}</Text>
-        </Pressable>
+        </PressScale>
       </View>
     </SafeAreaView>
   );

@@ -3,8 +3,9 @@ import type { Id } from "@hubbr/backend/dataModel";
 import { useQuery } from "convex/react";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { EventRow } from "./event-ui";
+import { PressScale } from "@/components/press-scale";
 
 /** The hub's Events segment (HUB-23): a "New event" button, then upcoming and past. */
 export function HubEvents({ hubId }: { hubId: Id<"hubs"> }) {
@@ -12,14 +13,14 @@ export function HubEvents({ hubId }: { hubId: Id<"hubs"> }) {
   const events = useQuery(api.events.forHub, { hubId });
   return (
     <View className="gap-5">
-      <Pressable
+      <PressScale
         testID="new-event"
         accessibilityRole="button"
         onPress={() => router.push({ pathname: "/event/new", params: { hubId } })}
         className="items-center rounded-xl bg-primarySoft px-4 py-3.5 active:opacity-80"
       >
         <Text className="font-sans-bold text-[16px] text-primaryStrong">{t("events.new")}</Text>
-      </Pressable>
+      </PressScale>
       {events === undefined ? (
         <ActivityIndicator />
       ) : events.upcoming.length === 0 && events.past.length === 0 ? (

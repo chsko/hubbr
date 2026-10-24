@@ -8,6 +8,7 @@ import { ActivityIndicator, Alert, Pressable, ScrollView, Text, View } from "rea
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "@/components/avatar";
 import { LanguagePicker } from "@/components/language-picker";
+import { PressScale } from "@/components/press-scale";
 import { VerifiedBadge } from "@/components/verified-badge";
 import { type FirstStop, setFirstStop } from "@/lib/first-stop";
 import { useLocale } from "@/lib/i18n";
@@ -106,7 +107,11 @@ export default function Onboarding() {
           {photo.busy ? (
             <ActivityIndicator />
           ) : (
-            <Pressable accessibilityRole="button" onPress={() => void pickPhoto()}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => void pickPhoto()}
+              className="active:opacity-60"
+            >
               <Text className="font-sans-semibold text-[15px] text-primary">
                 {me.photoUrl ? t("profile.changePhoto") : t("profile.addPhotoOptional")}
               </Text>
@@ -121,7 +126,7 @@ export default function Onboarding() {
 
         <LanguagePicker />
 
-        <Pressable
+        <PressScale
           testID="onboarding-done"
           accessibilityRole="button"
           disabled={saving || photo.busy}
@@ -131,7 +136,7 @@ export default function Onboarding() {
           <Text className="font-sans-bold text-[17px] text-primaryStrong">
             {t("onboarding.continue")}
           </Text>
-        </Pressable>
+        </PressScale>
       </ScrollView>
     </SafeAreaView>
   );
@@ -167,7 +172,7 @@ function NotificationsStep({
           </Text>
         </View>
         <View className="gap-2">
-          <Pressable
+          <PressScale
             testID="onboarding-push-on"
             accessibilityRole="button"
             disabled={busy}
@@ -177,7 +182,7 @@ function NotificationsStep({
             <Text className="font-sans-bold text-[17px] text-bg">
               {t("onboarding.notificationsOn")}
             </Text>
-          </Pressable>
+          </PressScale>
           <Pressable
             testID="onboarding-push-later"
             accessibilityRole="button"
@@ -217,7 +222,7 @@ function StartStep({ busy, onPick }: { busy: boolean; onPick: (stop: FirstStop |
         </View>
         <View className="gap-3">
           {choices.map(({ stop, icon: Icon, key }) => (
-            <Pressable
+            <PressScale
               key={key}
               testID={`onboarding-start-${key}`}
               accessibilityRole="button"
@@ -236,7 +241,7 @@ function StartStep({ busy, onPick }: { busy: boolean; onPick: (stop: FirstStop |
                   {t(`onboarding.start.${key}.body`)}
                 </Text>
               </View>
-            </Pressable>
+            </PressScale>
           ))}
         </View>
         <Pressable
