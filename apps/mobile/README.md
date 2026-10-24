@@ -1,6 +1,6 @@
 # @hubbr/mobile
 
-Expo Router app (Expo SDK 57) for iOS, Android and the logged-in web app.
+Expo Router app (Expo SDK 58) for iOS, Android and the logged-in web app.
 
 - Routes live in `src/app/` (tabs in `src/app/(tabs)/`); other code in `src/components/` and `src/lib/`
 - Styling: NativeWind 4 (Tailwind 3). Colour tokens come from `@hubbr/shared` and are applied as CSS variables

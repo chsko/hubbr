@@ -79,7 +79,9 @@
         {
           "color": "#2F5D50"
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-status-bar"
     ],
     "experiments": {
       "typedRoutes": true,

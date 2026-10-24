@@ -4,7 +4,14 @@ import { useQuery } from "convex/react";
 import { CalendarDays, type LucideIcon, MessageCircle, ShieldCheck } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, ScrollView, Text, useWindowDimensions, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  type ScrollViewInstance,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DevSignIn } from "@/components/dev-sign-in";
@@ -25,7 +32,7 @@ export default function Welcome() {
   const { width, height } = useWindowDimensions();
   const personas = useQuery(api.devSignIn.personas);
   const [showDev, setShowDev] = useState(false);
-  const scroll = useRef<ScrollView>(null);
+  const scroll = useRef<ScrollViewInstance>(null);
 
   // The persona list can push below the fold on small phones.
   useEffect(() => {

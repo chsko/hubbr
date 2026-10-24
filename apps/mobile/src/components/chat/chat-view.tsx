@@ -279,14 +279,14 @@ export function ChatView({
                 </Pressable>
               ))}
             </View>
-          ) : null
+          ) : undefined
         }
         ListFooterComponent={
           status === "Exhausted" ? (
             <View className="pb-2">{header}</View>
           ) : status === "LoadingFirstPage" || status === "LoadingMore" ? (
             <ActivityIndicator className="py-4" />
-          ) : null
+          ) : undefined
         }
       />
       <Composer
