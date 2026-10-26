@@ -23,6 +23,7 @@
 - Use pnpm, never npm/npx: `pnpm dlx` instead of `npx`, `pnpm expo …` for the Expo CLI, also in docs and instructions for Christian.
 - pnpm 12 (`packageManager`). Its default `minimumReleaseAge` rejects packages published less than a day ago; keep it as supply-chain protection, so "latest" means the newest version that passes it. Packages that may run install scripts are listed under `allowBuilds` in `pnpm-workspace.yaml` (add with `pnpm approve-builds <pkg>`).
 - Expo-managed native packages (react, react-native, reanimated, …) must match the SDK table, not npm `latest`. NativeWind 4 requires Tailwind 3 in `apps/mobile`.
+- Claude Code plugins: `.claude/settings.json` enables `expo@claude-plugins-official` (and `typesafe@typesafe-ai`) for local sessions. Cloud project threads ignore repo-declared plugins; they get them from the Hubbr project's Project settings > Plugins.
 - `AGENTS.md` is maintained automatically by Turborepo (root), Expo (`apps/mobile`) and Next.js (`apps/web`); leave them in place.
 - Convex CLI in cloud sessions: HTTP-based commands work (`convex dev --once`, `deploy`, `codegen`) with `CONVEX_DEPLOY_KEY`; WebSocket-based ones (`env list`, `data`, `logs`, `run`) hang because Node's WebSocket client bypasses the HTTP proxy. Never print `CONVEX_DEPLOY_KEY`.
 - Expo: `api.expo.dev` and `docs.expo.dev` are blocked here; use `EXPO_OFFLINE=1` for `expo export` and check versions against `expo/bundledNativeModules.json`.
